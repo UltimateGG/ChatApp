@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Chat App" Height="628" Width="421" ResizeMode="NoResize" MouseDown="Window_MouseDown">
+    <Grid x:Name="MainGrid">
+        <Label Content="Start or Join Server" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" FontFamily="Microsoft JhengHei" FontSize="16" FontWeight="Bold"/>
 
+        <Grid VerticalAlignment="Top" Margin="84,166,83,0" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*" MinWidth="70"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="IPAddress" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="142" Margin="0,26,8,0" Text="0.0.0.0" Grid.RowSpan="2"/>
+            <Label Content="IP Address" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-5,0,0,0"/>
+            <TextBox x:Name="Port" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,26,0,0" Text="23970" Grid.Column="1" PreviewTextInput="Port_PreviewTextInput" />
+            <Button x:Name="StartServerBtn" Content="Host Server" HorizontalAlignment="Right" Margin="0,16,8,0" VerticalAlignment="Top" Click="StartServerBtn_Click" Grid.Row="1" Width="72"/>
+            <Button x:Name="ConnectBtn" Content="Connect" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Click="ConnectBtn_Click"/>
+            <Label Content="Port" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Column="1" Margin="-5,0,0,0"/>
+        </Grid>
     </Grid>
 </Window>
