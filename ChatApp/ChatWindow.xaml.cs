@@ -2,11 +2,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace ChatApp;
@@ -32,10 +29,10 @@ public partial class ChatWindow : Window
                 Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 listener.Bind(localEndPoint);
                 listener.Listen(10);
-                Console.WriteLine("Waiting for a connection on port " + portNum);
+                Debug.WriteLine("Waiting for a connection on port " + portNum);
                 // This blocking call runs on a background thread.
                 Socket client = listener.Accept();
-                Console.WriteLine("Client connected.");
+                Debug.WriteLine("Client connected.");
                 // Store the connection socket in the Tag property.
                 Dispatcher.Invoke(() => { this.Tag = client; });
                 // Start receiving messages on this connection.
@@ -43,7 +40,7 @@ public partial class ChatWindow : Window
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error hosting server: " + ex.Message);
+                Debug.WriteLine("Error hosting server: " + ex.Message);
             }
         });
     }
@@ -57,22 +54,22 @@ public partial class ChatWindow : Window
             {
                 if (!IPAddress.TryParse(this.ip, out IPAddress remoteIP))
                 {
-                    Console.WriteLine("Invalid IP address.");
+                    Debug.WriteLine("Invalid IP address.");
                     return;
                 }
                 int portNum = int.Parse(this.port);
                 IPEndPoint remoteEP = new IPEndPoint(remoteIP, portNum);
                 Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                Console.WriteLine("Connecting to server at " + this.ip + ":" + portNum);
+                Debug.WriteLine("Connecting to server at " + this.ip + ":" + portNum);
                 clientSocket.Connect(remoteEP);
-                Console.WriteLine("Connected to server.");
+                Debug.WriteLine("Connected to server.");
                 Dispatcher.Invoke(() => { this.Tag = clientSocket; });
                 // Start receiving messages on this connection.
                 StartReceiving(clientSocket);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error connecting to server: " + ex.Message);
+                Debug.WriteLine("Error connecting to server: " + ex.Message);
             }
         });
     }
@@ -89,12 +86,12 @@ public partial class ChatWindow : Window
             }
             else
             {
-                Console.WriteLine("No valid connection to send message.");
+                Debug.WriteLine("No valid connection to send message.");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error sending message: " + ex.Message);
+            Debug.WriteLine("Error sending message: " + ex.Message);
         }
     }
 
@@ -121,11 +118,11 @@ public partial class ChatWindow : Window
             }
             catch (SocketException se)
             {
-                Console.WriteLine("Socket error receiving message: " + se.Message);
+                Debug.WriteLine("Socket error receiving message: " + se.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error receiving message: " + ex.Message);
+                Debug.WriteLine("Error receiving message: " + ex.Message);
             }
         });
     }
@@ -133,9 +130,9 @@ public partial class ChatWindow : Window
     //Function to add a sent message to the screen
     public void addSentMessage(String message)
     {
-        Console.WriteLine("Before semaphore. Message: " + message);
+        Debug.WriteLine("Before semaphore. Message: " + message);
         mutex.WaitOne();
-        Console.WriteLine("In semaphore.");
+        Debug.WriteLine("In semaphore.");
         this.messageCount++;
 
         //Add two row definitions to the chat messages grid
@@ -174,7 +171,7 @@ public partial class ChatWindow : Window
         ChatMessages.Children.Add(border);
 
         mutex.Release();
-        Console.WriteLine("Exiting semaphore.");
+        Debug.WriteLine("Exiting semaphore.");
     }
 
     //Function to add a received message to the screen
@@ -223,7 +220,7 @@ public partial class ChatWindow : Window
 
     public ChatWindow(String ip, String port, Boolean hosting)
     {
-        Console.WriteLine("Constructor Entry");
+        Debug.WriteLine("Constructor Entry");
         InitializeComponent();
         this.ip = ip;
         this.port = port;
@@ -239,7 +236,7 @@ public partial class ChatWindow : Window
             connectToServer();
         }
 
-        Console.WriteLine("Constructor Successful");
+        Debug.WriteLine("Constructor Successful");
     }
 
     //Function to handle send message click. Sends a message over the network, adds a message to the screen, and then clears the text box that enters a message

@@ -18,7 +18,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBox x:Name="IPAddress" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="142" Margin="0,26,8,0" Text="0.0.0.0" Grid.RowSpan="2"/>
+            <TextBox x:Name="IPAddress" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="142" Margin="0,26,8,0" Text="127.0.0.1" Grid.RowSpan="2"/>
             <Label Content="IP Address" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-5,0,0,0"/>
             <TextBox x:Name="Port" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,26,0,0" Text="23970" Grid.Column="1" PreviewTextInput="Port_PreviewTextInput" />
             <Button x:Name="StartServerBtn" Content="Host Server" HorizontalAlignment="Right" Margin="0,16,8,0" VerticalAlignment="Top" Click="StartServerBtn_Click" Grid.Row="1" Width="72"/>
